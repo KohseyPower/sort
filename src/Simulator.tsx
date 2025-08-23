@@ -16,15 +16,11 @@ function initElements(numElements: number) {
 
 export default function Simulator() {
   const [numElements, setNumElements] = useState(10);
-  const [cellSize, setSize] = useState(0);
   const [elements, setElements] = useState<number[]>([]);
   useEffect(() => {
     // Algorithms
     setElements(initElements(numElements));
     console.log("elements : ", elements);
-
-    //UI
-    setSize(WINDOWSIZE / numElements);
   }, [numElements]);
 
   const maxValue = useMemo(() => Math.max(1, ...elements), [elements]);
