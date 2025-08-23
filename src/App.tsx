@@ -1,5 +1,5 @@
 import "./App.css";
-import Simulator from "./simulator";
+import Simulator from "./Simulator";
 
 function App() {
   return (
