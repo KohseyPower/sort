@@ -6,5 +6,5 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - /etc/letsencrypt:/etc/letsencrypt:ro   # montage en lecture seule
+      - /etc/letsencrypt:/etc/letsencrypt:ro
     restart: always
