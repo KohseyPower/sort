@@ -4,4 +4,7 @@ services:
     container_name: sort-app
     ports:
       - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/letsencrypt:/etc/letsencrypt:ro   # montage en lecture seule
     restart: always
