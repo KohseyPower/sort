@@ -1,3 +1,2 @@
-import { bubbleSort } from "./BubbleSort";
-
-export default bubbleSort;
+export { bubbleSort } from "./BubbleSort";
+export { insertionSort } from "./InsertionSort";
