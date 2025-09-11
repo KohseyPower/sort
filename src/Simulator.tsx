@@ -44,7 +44,6 @@ export default function Simulator() {
         <div>
           <button
             onClick={() => {
-              console.log("bubble");
               setElements(bubbleSort(elements));
             }}
           >
