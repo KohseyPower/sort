@@ -1,6 +1,11 @@
 import { useState, useMemo } from "react";
 import * as Styled from "./Simulator.styled";
-import { bubbleSort, bubbleSortSteps, insertionSort } from "./algorithms";
+import {
+  bubbleSort,
+  bubbleSortGenerator,
+  insertionSort,
+  insertionSortGenerator,
+} from "./algorithms";
 
 const MIN = 5;
 const MAX = 60;
@@ -62,13 +67,16 @@ export default function Simulator() {
           </button>
           <button
             onClick={() => {
-              runSort(bubbleSortSteps(elements));
+              runSort(bubbleSortGenerator(elements));
             }}
           >
             Bubble Sort by steps
           </button>
           <button onClick={() => setElements(insertionSort(elements))}>
             Insertion Sort
+          </button>
+          <button onClick={() => runSort(insertionSortGenerator(elements))}>
+            Insertion Sort Steps
           </button>
         </div>
         <Styled.Canvas $size={WINDOWSIZE} $cols={totalElements}>

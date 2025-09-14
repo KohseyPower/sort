@@ -12,7 +12,7 @@ export function bubbleSort(elements: number[]): number[] {
   return sortedElements;
 }
 
-export function* bubbleSortSteps(elements: number[]) {
+export function* bubbleSortGenerator(elements: number[]) {
   const sortedElements = [...elements];
   for (let i = sortedElements.length - 1; i > 0; i--) {
     for (let j = 0; j < i; j++) {
