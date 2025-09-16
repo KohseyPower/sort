@@ -59,34 +59,30 @@ export default function Simulator() {
             }}
           />
         </div>
-        <div>
-          <button
-            onClick={() => {
-              setElements(bubbleSort(elements));
-            }}
-          >
+        <Styled.ButtonGroup>
+          <Styled.Button onClick={() => setElements(bubbleSort(elements))}>
             Bubble Sort
-          </button>
-          <button
-            onClick={() => {
-              runSort(bubbleSortGenerator(elements));
-            }}
-          >
-            Bubble Sort by steps
-          </button>
-          <button onClick={() => setElements(insertionSort(elements))}>
+          </Styled.Button>
+          <Styled.Button onClick={() => runSort(bubbleSortGenerator(elements))}>
+            Bubble Sort Steps
+          </Styled.Button>
+          <Styled.Button onClick={() => setElements(insertionSort(elements))}>
             Insertion Sort
-          </button>
-          <button onClick={() => runSort(insertionSortGenerator(elements))}>
+          </Styled.Button>
+          <Styled.Button
+            onClick={() => runSort(insertionSortGenerator(elements))}
+          >
             Insertion Sort Steps
-          </button>
-          <button onClick={() => setElements(selectionSort(elements))}>
+          </Styled.Button>
+          <Styled.Button onClick={() => setElements(selectionSort(elements))}>
             Selection Sort
-          </button>
-          <button onClick={() => runSort(selectionSortGenerator(elements))}>
-            Selection Sort by steps
-          </button>
-        </div>
+          </Styled.Button>
+          <Styled.Button
+            onClick={() => runSort(selectionSortGenerator(elements))}
+          >
+            Selection Sort Steps
+          </Styled.Button>
+        </Styled.ButtonGroup>
         <Styled.Canvas $size={WINDOWSIZE} $cols={totalElements}>
           {elements.map((value, index) => (
             <Styled.Bar key={index} $value={value} $max={maxValue} />
