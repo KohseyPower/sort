@@ -6,6 +6,7 @@ import {
   insertionSort,
   insertionSortGenerator,
   selectionSort,
+  selectionSortGenerator,
 } from "./algorithms";
 
 const MIN = 5;
@@ -81,6 +82,9 @@ export default function Simulator() {
           </button>
           <button onClick={() => setElements(selectionSort(elements))}>
             Selection Sort
+          </button>
+          <button onClick={() => runSort(selectionSortGenerator(elements))}>
+            Selection Sort by steps
           </button>
         </div>
         <Styled.Canvas $size={WINDOWSIZE} $cols={totalElements}>

@@ -14,6 +14,7 @@ export function bubbleSort(elements: number[]): number[] {
 
 export function* bubbleSortGenerator(elements: number[]) {
   const sortedElements = [...elements];
+  yield sortedElements;
   for (let i = sortedElements.length - 1; i > 0; i--) {
     for (let j = 0; j < i; j++) {
       if (sortedElements[j] > sortedElements[j + 1]) {
