@@ -17,18 +17,23 @@ export function selectionSort(elements: number[]): number[] {
 
 export function* selectionSortGenerator(elements: number[]) {
   const sortedElements = [...elements];
-  yield sortedElements;
+
   for (let i = 0; i < sortedElements.length; i++) {
     let minIndex = i;
-    for (let j = i; j < sortedElements.length; j++) {
+    for (let j = i + 1; j < sortedElements.length; j++) {
       if (sortedElements[j] < sortedElements[minIndex]) {
         minIndex = j;
       }
+      yield [...sortedElements];
     }
-    [sortedElements[i], sortedElements[minIndex]] = [
-      sortedElements[minIndex],
-      sortedElements[i],
-    ];
-    yield sortedElements;
+
+    if (minIndex !== i) {
+      [sortedElements[i], sortedElements[minIndex]] = [
+        sortedElements[minIndex],
+        sortedElements[i],
+      ];
+    }
+
+    yield [...sortedElements];
   }
 }
