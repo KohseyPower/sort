@@ -8,13 +8,7 @@ import {
   selectionSort,
   selectionSortGenerator,
 } from "./algorithms";
-
-function initElements(numElements: number) {
-  return Array.from(
-    { length: numElements },
-    () => Math.floor(Math.random() * numElements) + 1
-  );
-}
+import { initElements } from "./utils";
 
 export default function Simulator() {
   const [totalElements, setTotalElements] = useState(10);
