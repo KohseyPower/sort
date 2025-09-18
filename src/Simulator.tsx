@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import * as Styled from "./Simulator.styled";
 import {
   bubbleSort,
@@ -22,6 +22,8 @@ function initElements(numElements: number) {
 export default function Simulator() {
   const [totalElements, setTotalElements] = useState(10);
   const [elements, setElements] = useState<number[]>(() => initElements(10));
+  const [isRunning, setIsRunning] = useState(false);
+  const intervalRef = useRef<number | null>(null);
 
   const maxValue = useMemo(
     () => elements.reduce((max, v) => (v > max ? v : max), 1),
@@ -29,10 +31,14 @@ export default function Simulator() {
   );
 
   const runSort = (steps: Generator<number[]>) => {
-    const intervalId = setInterval(() => {
+    if (isRunning) return;
+    setIsRunning(true);
+
+    intervalRef.current = setInterval(() => {
       const nextStep = steps.next();
       if (nextStep.done) {
-        clearInterval(intervalId);
+        if (intervalRef.current) clearInterval(intervalRef.current);
+        setIsRunning(false);
       } else {
         setElements(nextStep.value);
       }
@@ -62,30 +68,54 @@ export default function Simulator() {
             }}
           />
         </div>
-        <Styled.ButtonGroup>
-          <Styled.Button onClick={() => setElements(bubbleSort(elements))}>
-            Bubble Sort
-          </Styled.Button>
-          <Styled.Button onClick={() => runSort(bubbleSortGenerator(elements))}>
-            Bubble Sort Steps
-          </Styled.Button>
-          <Styled.Button onClick={() => setElements(insertionSort(elements))}>
-            Insertion Sort
-          </Styled.Button>
-          <Styled.Button
-            onClick={() => runSort(insertionSortGenerator(elements))}
-          >
-            Insertion Sort Steps
-          </Styled.Button>
-          <Styled.Button onClick={() => setElements(selectionSort(elements))}>
-            Selection Sort
-          </Styled.Button>
-          <Styled.Button
-            onClick={() => runSort(selectionSortGenerator(elements))}
-          >
-            Selection Sort Steps
-          </Styled.Button>
-        </Styled.ButtonGroup>
+        <Styled.GroupsParametersContainer>
+          <Styled.GroupParameters>
+            <h2>One-shot sorts</h2>
+            <Styled.ButtonGroup>
+              <Styled.Button
+                disabled={isRunning}
+                onClick={() => setElements(bubbleSort(elements))}
+              >
+                Bubble Sort
+              </Styled.Button>
+              <Styled.Button
+                disabled={isRunning}
+                onClick={() => setElements(insertionSort(elements))}
+              >
+                Insertion Sort
+              </Styled.Button>
+              <Styled.Button
+                disabled={isRunning}
+                onClick={() => setElements(selectionSort(elements))}
+              >
+                Selection Sort
+              </Styled.Button>
+            </Styled.ButtonGroup>
+          </Styled.GroupParameters>
+          <Styled.GroupParameters>
+            <h2>Step-by-step sorts</h2>
+            <Styled.ButtonGroup>
+              <Styled.Button
+                disabled={isRunning}
+                onClick={() => runSort(bubbleSortGenerator(elements))}
+              >
+                Bubble Sort
+              </Styled.Button>
+              <Styled.Button
+                disabled={isRunning}
+                onClick={() => runSort(insertionSortGenerator(elements))}
+              >
+                Insertion Sort
+              </Styled.Button>
+              <Styled.Button
+                disabled={isRunning}
+                onClick={() => runSort(selectionSortGenerator(elements))}
+              >
+                Selection Sort
+              </Styled.Button>
+            </Styled.ButtonGroup>
+          </Styled.GroupParameters>
+        </Styled.GroupsParametersContainer>
       </Styled.SimulatorContainer>
     </>
   );

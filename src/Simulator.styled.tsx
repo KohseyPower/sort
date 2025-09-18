@@ -10,8 +10,8 @@ export const Canvas = styled.div<{ $cols: number }>`
   display: grid;
   grid-template-columns: repeat(${({ $cols }) => $cols}, 1fr);
   width: 80vw;
-  height: 50vh;
-  border: 1px solid #333;
+  height: 40vh;
+  border: 2px solid #333;
 `;
 
 export const Bar = styled.div<{ $value: number; $max: number }>`
@@ -26,11 +26,22 @@ export const Bar = styled.div<{ $value: number; $max: number }>`
   }
 `;
 
-export const ButtonGroup = styled.div`
+export const GroupsParametersContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin: 1.5rem 0;
+  gap: 20px;
+`;
+
+export const GroupParameters = styled.div`
+  background-color: #404040af;
+  border-radius: 10px;
+  padding: 10px;
+`;
+
+export const ButtonGroup = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
 `;
 
 export const Button = styled.button`
