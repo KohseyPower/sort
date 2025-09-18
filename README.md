@@ -13,3 +13,11 @@ I built this project as a way to review the sorting algorithms I learned during 
 - React
 - TypeScript
 - styled-components
+
+## TODO
+
+- [ ] Make a sound when sorting
+- [ ] Implement merge sort
+- [ ] Implement quick sort
+- [ ] Implement radix sort
+- [ ] Reponsive
