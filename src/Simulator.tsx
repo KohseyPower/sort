@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import * as Styled from "./Simulator.styled";
 import {
   bubbleSort,
@@ -22,52 +22,88 @@ function initElements(numElements: number) {
 export default function Simulator() {
   const [totalElements, setTotalElements] = useState(10);
   const [elements, setElements] = useState<number[]>(() => initElements(10));
+  const [activeIndices, setActiveIndices] = useState<number[]>([]);
   const [isRunning, setIsRunning] = useState(false);
-  const intervalRef = useRef<number | null>(null);
+  const [sortSpeed, setSortSpeed] = useState(200);
+
+  const sortSpeedRef = useRef(sortSpeed);
+  const stepsRef = useRef<Generator<{
+    array: number[];
+    active: number[];
+  }> | null>(null);
 
   const maxValue = useMemo(
     () => elements.reduce((max, v) => (v > max ? v : max), 1),
     [elements]
   );
 
-  const runSort = (steps: Generator<number[]>) => {
+  sortSpeedRef.current = sortSpeed;
+
+  const runSort = (steps: Generator<{ array: number[]; active: number[] }>) => {
     if (isRunning) return;
     setIsRunning(true);
+    stepsRef.current = steps;
 
-    intervalRef.current = setInterval(() => {
-      const nextStep = steps.next();
-      if (nextStep.done) {
-        if (intervalRef.current) clearInterval(intervalRef.current);
+    const runStep = () => {
+      const nextStep = stepsRef.current?.next();
+      if (!nextStep || nextStep.done) {
         setIsRunning(false);
-      } else {
-        setElements(nextStep.value);
+        setActiveIndices([]);
+        return;
       }
-    }, 200);
+
+      setElements(nextStep.value.array);
+      setActiveIndices(nextStep.value.active);
+
+      setTimeout(runStep, sortSpeedRef.current);
+    };
+
+    runStep();
   };
 
   return (
     <>
-      <h1>Visualization of different sorts</h1>
+      <h2>Visualization of different sorts</h2>
       <Styled.SimulatorContainer>
         <Styled.Canvas $cols={totalElements}>
           {elements.map((value, index) => (
-            <Styled.Bar key={index} $value={value} $max={maxValue} />
+            <Styled.Bar
+              key={index}
+              $value={value}
+              $max={maxValue}
+              $active={activeIndices.includes(index)}
+            />
           ))}
         </Styled.Canvas>
-        <div>
-          <h3>Number of elements: {totalElements}</h3>
-          <input
-            type="range"
-            min={MIN}
-            max={MAX}
-            value={totalElements}
-            onChange={(e) => {
-              const newValue = Number(e.target.value);
-              setTotalElements(newValue);
-              setElements(initElements(newValue));
-            }}
-          />
-        </div>
+        <Styled.SlidersContainer>
+          <div>
+            <h3>Number of elements: {totalElements}</h3>
+            <input
+              type="range"
+              min={MIN}
+              max={MAX}
+              value={totalElements}
+              disabled={isRunning}
+              onChange={(e) => {
+                const newValue = Number(e.target.value);
+                setTotalElements(newValue);
+                setElements(initElements(newValue));
+              }}
+            />
+          </div>
+          <div>
+            <h3>Speed : {sortSpeed}</h3>
+            <input
+              type="range"
+              min={0}
+              max={1000}
+              value={sortSpeed}
+              onChange={(e) => {
+                setSortSpeed(Number(e.target.value));
+              }}
+            />
+          </div>
+        </Styled.SlidersContainer>
         <Styled.GroupsParametersContainer>
           <Styled.GroupParameters>
             <h2>One-shot sorts</h2>

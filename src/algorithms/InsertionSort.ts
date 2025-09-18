@@ -15,7 +15,7 @@ export function insertionSort(elements: number[]): number[] {
 
 export function* insertionSortGenerator(elements: number[]) {
   const sortedElements = [...elements];
-  yield [...sortedElements];
+  yield { array: [...sortedElements], active: [] };
 
   for (let i = 1; i < sortedElements.length; i++) {
     const key = sortedElements[i];
@@ -24,9 +24,9 @@ export function* insertionSortGenerator(elements: number[]) {
     while (j >= 0 && sortedElements[j] > key) {
       sortedElements[j + 1] = sortedElements[j];
       j--;
-      yield [...sortedElements];
+      yield { array: [...sortedElements], active: [j, j + 1] };
     }
     sortedElements[j + 1] = key;
-    yield [...sortedElements];
+    yield { array: [...sortedElements], active: [i, j + 1] };
   }
 }

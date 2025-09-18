@@ -4,6 +4,7 @@ export const SimulatorContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 20px;
 `;
 
 export const Canvas = styled.div<{ $cols: number }>`
@@ -14,16 +15,27 @@ export const Canvas = styled.div<{ $cols: number }>`
   border: 2px solid #333;
 `;
 
-export const Bar = styled.div<{ $value: number; $max: number }>`
+export const Bar = styled.div<{
+  $value: number;
+  $max: number;
+  $active?: boolean;
+}>`
   align-self: end;
   height: ${({ $value, $max }) => Math.max(0.02, $value / $max) * 100}%;
-  background: #4f46e5;
+  background: ${({ $active }) => ($active ? "#f43f5e" : "#4f46e5")};
+  transition: height 0.1s;
+
   &:nth-child(odd) {
     filter: brightness(1.05);
   }
   &:nth-child(even) {
     filter: brightness(0.95);
   }
+`;
+
+export const SlidersContainer = styled.div`
+  display: flex;
+  gap: 100px;
 `;
 
 export const GroupsParametersContainer = styled.div`

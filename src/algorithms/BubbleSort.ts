@@ -14,15 +14,19 @@ export function bubbleSort(elements: number[]): number[] {
 
 export function* bubbleSortGenerator(elements: number[]) {
   const sortedElements = [...elements];
-  yield sortedElements;
+  yield { array: [...sortedElements], active: [] };
+
   for (let i = sortedElements.length - 1; i > 0; i--) {
     for (let j = 0; j < i; j++) {
+      yield { array: [...sortedElements], active: [j, j + 1] };
+
       if (sortedElements[j] > sortedElements[j + 1]) {
         [sortedElements[j], sortedElements[j + 1]] = [
           sortedElements[j + 1],
           sortedElements[j],
         ];
-        yield [...sortedElements];
+
+        yield { array: [...sortedElements], active: [j, j + 1] };
       }
     }
   }
