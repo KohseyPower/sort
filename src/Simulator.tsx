@@ -58,7 +58,7 @@ export default function Simulator() {
 
   return (
     <>
-      <h2>Visualization of different sorts</h2>
+      <h3>Visualization of different sorts</h3>
       <Styled.SimulatorContainer>
         <Styled.Canvas $cols={totalElements}>
           {elements.map((value, index) => (
@@ -101,7 +101,7 @@ export default function Simulator() {
         </Styled.SlidersContainer>
         <Styled.GroupsParametersContainer>
           <Styled.GroupParameters>
-            <h2>One-shot sorts</h2>
+            <h3>One-shot sorts</h3>
             <Styled.ButtonGroup>
               <Styled.Button
                 disabled={isSimulationActive}
@@ -124,7 +124,7 @@ export default function Simulator() {
             </Styled.ButtonGroup>
           </Styled.GroupParameters>
           <Styled.GroupParameters>
-            <h2>Step-by-step sorts</h2>
+            <h3>Step-by-step sorts</h3>
             <Styled.ButtonGroup>
               <Styled.Button
                 disabled={isSimulationActive}
