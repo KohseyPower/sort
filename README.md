@@ -21,3 +21,5 @@ I built this project as a way to review the sorting algorithms I learned during 
 - [ ] Implement quick sort
 - [ ] Implement radix sort
 - [ ] Reponsive
+- [ ] Reset Button
+- [ ] Multiple type of start
