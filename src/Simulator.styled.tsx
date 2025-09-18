@@ -1,5 +1,31 @@
 import styled from "styled-components";
 
+export const SimulatorContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const Canvas = styled.div<{ $cols: number }>`
+  display: grid;
+  grid-template-columns: repeat(${({ $cols }) => $cols}, 1fr);
+  width: 80vw;
+  height: 50vh;
+  border: 1px solid #333;
+`;
+
+export const Bar = styled.div<{ $value: number; $max: number }>`
+  align-self: end;
+  height: ${({ $value, $max }) => Math.max(0.02, $value / $max) * 100}%;
+  background: #4f46e5;
+  &:nth-child(odd) {
+    filter: brightness(1.05);
+  }
+  &:nth-child(even) {
+    filter: brightness(0.95);
+  }
+`;
+
 export const ButtonGroup = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -28,18 +54,4 @@ export const Button = styled.button`
     transform: translateY(0px);
     box-shadow: 0 2px 6px rgba(79, 70, 229, 0.4);
   }
-`;
-
-export const Canvas = styled.div<{ $size: number; $cols: number }>`
-  display: grid;
-  grid-template-columns: repeat(${({ $cols }) => $cols}, 1fr);
-  width: ${({ $size }) => $size}px;
-  height: ${({ $size }) => $size}px;
-  border: 1px solid #333;
-`;
-
-export const Bar = styled.div<{ $value: number; $max: number }>`
-  align-self: end;
-  height: ${({ $value, $max }) => Math.max(0.02, $value / $max) * 100}%;
-  background: #4f46e5;
 `;

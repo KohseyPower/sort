@@ -11,7 +11,6 @@ import {
 
 const MIN = 5;
 const MAX = 60;
-const WINDOWSIZE = 400;
 
 function initElements(numElements: number) {
   return Array.from(
@@ -43,8 +42,12 @@ export default function Simulator() {
   return (
     <>
       <h1>Visualization of different sorts</h1>
-      <div>
-        <h2>Bubble sort</h2>
+      <Styled.SimulatorContainer>
+        <Styled.Canvas $cols={totalElements}>
+          {elements.map((value, index) => (
+            <Styled.Bar key={index} $value={value} $max={maxValue} />
+          ))}
+        </Styled.Canvas>
         <div>
           <h3>Number of elements: {totalElements}</h3>
           <input
@@ -83,12 +86,7 @@ export default function Simulator() {
             Selection Sort Steps
           </Styled.Button>
         </Styled.ButtonGroup>
-        <Styled.Canvas $size={WINDOWSIZE} $cols={totalElements}>
-          {elements.map((value, index) => (
-            <Styled.Bar key={index} $value={value} $max={maxValue} />
-          ))}
-        </Styled.Canvas>
-      </div>
+      </Styled.SimulatorContainer>
     </>
   );
 }
