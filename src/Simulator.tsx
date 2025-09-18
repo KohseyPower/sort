@@ -74,7 +74,7 @@ export default function Simulator() {
               value={pendingElements}
               disabled={isSimulationActive}
               onChange={(e) => setPendingElements(Number(e.target.value))}
-              onMouseUp={() => {
+              onPointerUp={() => {
                 setTotalElements(pendingElements);
                 setElements(initElements(pendingElements));
               }}

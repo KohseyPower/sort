@@ -36,11 +36,18 @@ export const Bar = styled.div<{
 export const SlidersContainer = styled.div`
   display: flex;
   gap: 100px;
+  @media (max-width: 500px) {
+    flex-direction: column;
+    gap: 0px;
+  }
 `;
 
 export const GroupsParametersContainer = styled.div`
   display: flex;
   gap: 20px;
+  @media (max-width: 500px) {
+    flex-direction: column;
+  }
 `;
 
 export const GroupParameters = styled.div`
