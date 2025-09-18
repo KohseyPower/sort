@@ -9,9 +9,6 @@ import {
   selectionSortGenerator,
 } from "./algorithms";
 
-const MIN = 5;
-const MAX = 60;
-
 function initElements(numElements: number) {
   return Array.from(
     { length: numElements },
@@ -22,8 +19,9 @@ function initElements(numElements: number) {
 export default function Simulator() {
   const [totalElements, setTotalElements] = useState(10);
   const [elements, setElements] = useState<number[]>(() => initElements(10));
+  const [pendingElements, setPendingElements] = useState(totalElements);
   const [activeIndices, setActiveIndices] = useState<number[]>([]);
-  const [isRunning, setIsRunning] = useState(false);
+  const [isSimulationActive, setIsSimulationActive] = useState(false);
   const [sortSpeed, setSortSpeed] = useState(200);
 
   const sortSpeedRef = useRef(sortSpeed);
@@ -40,24 +38,21 @@ export default function Simulator() {
   sortSpeedRef.current = sortSpeed;
 
   const runSort = (steps: Generator<{ array: number[]; active: number[] }>) => {
-    if (isRunning) return;
-    setIsRunning(true);
+    if (isSimulationActive) return;
+    setIsSimulationActive(true);
     stepsRef.current = steps;
 
     const runStep = () => {
       const nextStep = stepsRef.current?.next();
       if (!nextStep || nextStep.done) {
-        setIsRunning(false);
+        setIsSimulationActive(false);
         setActiveIndices([]);
         return;
       }
-
       setElements(nextStep.value.array);
       setActiveIndices(nextStep.value.active);
-
       setTimeout(runStep, sortSpeedRef.current);
     };
-
     runStep();
   };
 
@@ -80,14 +75,14 @@ export default function Simulator() {
             <h3>Number of elements: {totalElements}</h3>
             <input
               type="range"
-              min={MIN}
-              max={MAX}
-              value={totalElements}
-              disabled={isRunning}
-              onChange={(e) => {
-                const newValue = Number(e.target.value);
-                setTotalElements(newValue);
-                setElements(initElements(newValue));
+              min={5}
+              max={50}
+              value={pendingElements}
+              disabled={isSimulationActive}
+              onChange={(e) => setPendingElements(Number(e.target.value))}
+              onMouseUp={() => {
+                setTotalElements(pendingElements);
+                setElements(initElements(pendingElements));
               }}
             />
           </div>
@@ -109,19 +104,19 @@ export default function Simulator() {
             <h2>One-shot sorts</h2>
             <Styled.ButtonGroup>
               <Styled.Button
-                disabled={isRunning}
+                disabled={isSimulationActive}
                 onClick={() => setElements(bubbleSort(elements))}
               >
                 Bubble Sort
               </Styled.Button>
               <Styled.Button
-                disabled={isRunning}
+                disabled={isSimulationActive}
                 onClick={() => setElements(insertionSort(elements))}
               >
                 Insertion Sort
               </Styled.Button>
               <Styled.Button
-                disabled={isRunning}
+                disabled={isSimulationActive}
                 onClick={() => setElements(selectionSort(elements))}
               >
                 Selection Sort
@@ -132,19 +127,19 @@ export default function Simulator() {
             <h2>Step-by-step sorts</h2>
             <Styled.ButtonGroup>
               <Styled.Button
-                disabled={isRunning}
+                disabled={isSimulationActive}
                 onClick={() => runSort(bubbleSortGenerator(elements))}
               >
                 Bubble Sort
               </Styled.Button>
               <Styled.Button
-                disabled={isRunning}
+                disabled={isSimulationActive}
                 onClick={() => runSort(insertionSortGenerator(elements))}
               >
                 Insertion Sort
               </Styled.Button>
               <Styled.Button
-                disabled={isRunning}
+                disabled={isSimulationActive}
                 onClick={() => runSort(selectionSortGenerator(elements))}
               >
                 Selection Sort
