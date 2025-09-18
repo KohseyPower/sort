@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, useEffect } from "react";
+import { useState, useMemo, useRef } from "react";
 import * as Styled from "./Simulator.styled";
 import {
   bubbleSort,
