@@ -23,3 +23,4 @@ I built this project as a way to review the sorting algorithms I learned during 
 - [ ] Reponsive
 - [ ] Reset Button
 - [ ] Multiple type of start
+- [ ] Burger menu
