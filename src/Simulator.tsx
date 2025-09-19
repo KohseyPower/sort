@@ -9,6 +9,7 @@ import {
   selectionSortGenerator,
 } from "./algorithms";
 import { initElements } from "./utils";
+import BurgerMenu from "./UI/BurgerMenu";
 
 export default function Simulator() {
   const [totalElements, setTotalElements] = useState(10);
@@ -64,83 +65,85 @@ export default function Simulator() {
             />
           ))}
         </Styled.Canvas>
-        <Styled.SlidersContainer>
-          <div>
-            <h3>Number of elements: {totalElements}</h3>
-            <input
-              type="range"
-              min={5}
-              max={50}
-              value={pendingElements}
-              disabled={isSimulationActive}
-              onChange={(e) => setPendingElements(Number(e.target.value))}
-              onPointerUp={() => {
-                setTotalElements(pendingElements);
-                setElements(initElements(pendingElements));
-              }}
-            />
-          </div>
-          <div>
-            <h3>Speed : {sortSpeed}</h3>
-            <input
-              type="range"
-              min={0}
-              max={1000}
-              value={sortSpeed}
-              onChange={(e) => {
-                setSortSpeed(Number(e.target.value));
-              }}
-            />
-          </div>
-        </Styled.SlidersContainer>
-        <Styled.GroupsParametersContainer>
-          <Styled.GroupParameters>
-            <h3>One-shot sorts</h3>
-            <Styled.ButtonGroup>
-              <Styled.Button
+        <BurgerMenu>
+          <Styled.SlidersContainer>
+            <div>
+              <h3>Number of elements: {totalElements}</h3>
+              <input
+                type="range"
+                min={5}
+                max={75}
+                value={pendingElements}
                 disabled={isSimulationActive}
-                onClick={() => setElements(bubbleSort(elements))}
-              >
-                Bubble Sort
-              </Styled.Button>
-              <Styled.Button
-                disabled={isSimulationActive}
-                onClick={() => setElements(insertionSort(elements))}
-              >
-                Insertion Sort
-              </Styled.Button>
-              <Styled.Button
-                disabled={isSimulationActive}
-                onClick={() => setElements(selectionSort(elements))}
-              >
-                Selection Sort
-              </Styled.Button>
-            </Styled.ButtonGroup>
-          </Styled.GroupParameters>
-          <Styled.GroupParameters>
-            <h3>Step-by-step sorts</h3>
-            <Styled.ButtonGroup>
-              <Styled.Button
-                disabled={isSimulationActive}
-                onClick={() => runSort(bubbleSortGenerator(elements))}
-              >
-                Bubble Sort
-              </Styled.Button>
-              <Styled.Button
-                disabled={isSimulationActive}
-                onClick={() => runSort(insertionSortGenerator(elements))}
-              >
-                Insertion Sort
-              </Styled.Button>
-              <Styled.Button
-                disabled={isSimulationActive}
-                onClick={() => runSort(selectionSortGenerator(elements))}
-              >
-                Selection Sort
-              </Styled.Button>
-            </Styled.ButtonGroup>
-          </Styled.GroupParameters>
-        </Styled.GroupsParametersContainer>
+                onChange={(e) => setPendingElements(Number(e.target.value))}
+                onPointerUp={() => {
+                  setTotalElements(pendingElements);
+                  setElements(initElements(pendingElements));
+                }}
+              />
+            </div>
+            <div>
+              <h3>Speed : {sortSpeed}</h3>
+              <input
+                type="range"
+                min={0}
+                max={1000}
+                value={sortSpeed}
+                onChange={(e) => {
+                  setSortSpeed(Number(e.target.value));
+                }}
+              />
+            </div>
+          </Styled.SlidersContainer>
+          <Styled.GroupsParametersContainer>
+            <Styled.GroupParameters>
+              <h3>One-shot sorts</h3>
+              <Styled.ButtonGroup>
+                <Styled.Button
+                  disabled={isSimulationActive}
+                  onClick={() => setElements(bubbleSort(elements))}
+                >
+                  Bubble Sort
+                </Styled.Button>
+                <Styled.Button
+                  disabled={isSimulationActive}
+                  onClick={() => setElements(insertionSort(elements))}
+                >
+                  Insertion Sort
+                </Styled.Button>
+                <Styled.Button
+                  disabled={isSimulationActive}
+                  onClick={() => setElements(selectionSort(elements))}
+                >
+                  Selection Sort
+                </Styled.Button>
+              </Styled.ButtonGroup>
+            </Styled.GroupParameters>
+            <Styled.GroupParameters>
+              <h3>Step-by-step sorts</h3>
+              <Styled.ButtonGroup>
+                <Styled.Button
+                  disabled={isSimulationActive}
+                  onClick={() => runSort(bubbleSortGenerator(elements))}
+                >
+                  Bubble Sort
+                </Styled.Button>
+                <Styled.Button
+                  disabled={isSimulationActive}
+                  onClick={() => runSort(insertionSortGenerator(elements))}
+                >
+                  Insertion Sort
+                </Styled.Button>
+                <Styled.Button
+                  disabled={isSimulationActive}
+                  onClick={() => runSort(selectionSortGenerator(elements))}
+                >
+                  Selection Sort
+                </Styled.Button>
+              </Styled.ButtonGroup>
+            </Styled.GroupParameters>
+          </Styled.GroupsParametersContainer>
+        </BurgerMenu>
       </Styled.SimulatorContainer>
     </>
   );

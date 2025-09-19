@@ -7,6 +7,7 @@ export const SimulatorContainer = styled.div`
   gap: 20px;
 `;
 
+/*********************************Draw********************* */
 export const Canvas = styled.div<{ $cols: number }>`
   display: grid;
   grid-template-columns: repeat(${({ $cols }) => $cols}, 1fr);
@@ -22,7 +23,7 @@ export const Bar = styled.div<{
 }>`
   align-self: end;
   height: ${({ $value, $max }) => Math.max(0.02, $value / $max) * 100}%;
-  background: ${({ $active }) => ($active ? "#f43f5e" : "#4f46e5")};
+  background: ${({ $active }) => ($active ? "#f43f5e" : "var(--main-color)")};
   transition: height 0.1s;
 
   &:nth-child(odd) {
@@ -33,21 +34,16 @@ export const Bar = styled.div<{
   }
 `;
 
+/** **************************Paramters********************* */
+
 export const SlidersContainer = styled.div`
   display: flex;
   gap: 100px;
-  @media (max-width: 500px) {
-    flex-direction: column;
-    gap: 0px;
-  }
 `;
 
 export const GroupsParametersContainer = styled.div`
   display: flex;
   gap: 20px;
-  @media (max-width: 500px) {
-    flex-direction: column;
-  }
 `;
 
 export const GroupParameters = styled.div`
@@ -64,7 +60,7 @@ export const ButtonGroup = styled.div`
 `;
 
 export const Button = styled.button`
-  background: #4f46e5;
+  background: var(--main-color);
   color: white;
   font-weight: 500;
   font-size: 0.9rem;
