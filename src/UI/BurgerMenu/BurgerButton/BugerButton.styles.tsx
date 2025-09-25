@@ -5,16 +5,17 @@ const lineGap = 5;
 const translateValue = lineHeight + lineGap;
 
 export const BurgerButton = styled.button`
-  position: fixed;
-  z-index: 10;
-  right: 2vh;
-  top: 2vh;
-  margin: 0;
-  padding: 0;
-  background-color: transparent;
-  cursor: pointer;
-  border: none;
+  display: none;
   @media (max-width: 600px) {
+    position: fixed;
+    right: 2vh;
+    top: 2vh;
+    z-index: 10;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
     display: flex;
     flex-direction: column;
     gap: ${lineGap}px;
