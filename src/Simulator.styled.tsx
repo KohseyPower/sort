@@ -44,6 +44,9 @@ export const SlidersContainer = styled.div`
 export const GroupsParametersContainer = styled.div`
   display: flex;
   gap: 20px;
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 export const GroupParameters = styled.div`
