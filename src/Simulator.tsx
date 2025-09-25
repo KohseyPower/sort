@@ -9,7 +9,7 @@ import {
   selectionSortGenerator,
 } from "./algorithms";
 import { initElements } from "./utils";
-import BurgerMenu from "./UI/BurgerMenu";
+import BurgerMenu from "./UI/BurgerMenu/BurgerMenu";
 
 export default function Simulator() {
   const [totalElements, setTotalElements] = useState(10);
