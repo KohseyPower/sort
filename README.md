@@ -20,7 +20,7 @@ I built this project as a way to review the sorting algorithms I learned during 
 - [ ] Implement merge sort
 - [ ] Implement quick sort
 - [ ] Implement radix sort
-- [ ] Reponsive
 - [ ] Reset Button
+- [ ] When it is sorted, display a popup to prevent the user that it is already sorted
+- [ ] Make the burger menu transparent to see the sort behing the settings
 - [ ] Multiple type of start
-- [ ] Burger menu
