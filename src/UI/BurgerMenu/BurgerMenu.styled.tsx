@@ -8,11 +8,9 @@ export const BurgerContainer = styled.div<{ $isOpen: boolean }>`
     transform: ${({ $isOpen }) =>
       $isOpen ? "translateX(0)" : "translateX(100vw)"};
     transition: 0.1s ease-in-out;
-
     height: 100vh;
     width: 100vw;
-
-    background-color: var(--light-background);
+    background-color: rgba(245, 245, 245, 0.8);
   }
 `;
 
