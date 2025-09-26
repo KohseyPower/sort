@@ -1,4 +1,4 @@
-import * as Styled from "./BUgerButton.styles";
+import * as Styled from "./BurgerButton.styles";
 import type { BurgerButtonProps } from "./BurgerButton.types";
 
 export default function BurgerButton({ isOpen, setIsOpen }: BurgerButtonProps) {
