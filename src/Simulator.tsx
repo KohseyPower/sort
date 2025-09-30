@@ -76,6 +76,11 @@ export default function Simulator() {
   };
 
   const handlePause = () => {
+    if (!isSimulationActive) {
+      alert("There is no simulation running.");
+      return;
+    }
+
     setIsSimulationActive(false);
     pausedRef.current = !pausedRef.current;
     setPaused(pausedRef.current);
