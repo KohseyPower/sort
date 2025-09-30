@@ -15,9 +15,9 @@ export default function Simulator() {
   const [activeIndices, setActiveIndices] = useState<number[]>([]);
   const [isSimulationActive, setIsSimulationActive] = useState(false);
   const [sortSpeed, setSortSpeed] = useState(200);
-  const [isPaused, setPaused] = useState(false);
-  const pausedRef = useRef(false);
+  const [isPaused, setIsPaused] = useState(false);
 
+  const pausedRef = useRef(false);
   const sortSpeedRef = useRef(sortSpeed);
   const stepsRef = useRef<Generator<{
     array: number[];
@@ -26,10 +26,7 @@ export default function Simulator() {
   const currentRunStepRef = useRef<() => void>(() => {});
   const timeoutRef = useRef<number | null>(null);
 
-  const maxValue = useMemo(
-    () => elements.reduce((max, v) => (v > max ? v : max), 1),
-    [elements]
-  );
+  const maxValue = useMemo(() => Math.max(...elements, 1), [elements]);
 
   sortSpeedRef.current = sortSpeed;
 
@@ -37,6 +34,8 @@ export default function Simulator() {
     if (isSimulationActive) return;
 
     setIsSimulationActive(true);
+    setIsPaused(false);
+    pausedRef.current = false;
     stepsRef.current = steps;
 
     const runStep = () => {
@@ -44,12 +43,14 @@ export default function Simulator() {
       const nextStep = stepsRef.current?.next();
       if (!nextStep || nextStep.done) {
         setIsSimulationActive(false);
+        setIsPaused(false);
         setActiveIndices([]);
+        stepsRef.current = null;
         return;
       }
       setElements(nextStep.value.array);
       setActiveIndices(nextStep.value.active);
-      timeoutRef.current = setTimeout(runStep, sortSpeedRef.current);
+      timeoutRef.current = window.setTimeout(runStep, sortSpeedRef.current);
     };
 
     currentRunStepRef.current = runStep;
@@ -57,35 +58,61 @@ export default function Simulator() {
   };
 
   const handleStop = () => {
-    if (!isSimulationActive) {
+    if (!isSimulationActive && !isPaused) {
       alert("There is no simulation running.");
       return;
     }
-    if (!isPaused) {
-      alert("The simulation is paused.");
-      return;
-    }
-
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
     stepsRef.current = null;
+    pausedRef.current = false;
     setIsSimulationActive(false);
+    setIsPaused(false);
     setActiveIndices([]);
   };
 
   const handlePause = () => {
-    if (!isSimulationActive) {
+    if (!isSimulationActive && !isPaused) {
       alert("There is no simulation running.");
       return;
     }
-
-    setIsSimulationActive(false);
     pausedRef.current = !pausedRef.current;
-    setPaused(pausedRef.current);
+    setIsPaused(pausedRef.current);
     if (!pausedRef.current) {
       currentRunStepRef.current();
+    }
+  };
+
+  const handleReset = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    stepsRef.current = null;
+    pausedRef.current = false;
+    setIsSimulationActive(false);
+    setIsPaused(false);
+    setActiveIndices([]);
+    setElements(shuffleElements(pendingElements));
+  };
+
+  const handleStep = () => {
+    if (!stepsRef.current) {
+      alert("There is no simulation loaded.");
+      return;
+    }
+    const nextStep = stepsRef.current.next();
+    if (!nextStep.done) {
+      setElements(nextStep.value.array);
+      setActiveIndices(nextStep.value.active);
+      setIsSimulationActive(true);
+    } else {
+      setIsSimulationActive(false);
+      setIsPaused(false);
+      setActiveIndices([]);
+      stepsRef.current = null;
     }
   };
 
@@ -137,19 +164,12 @@ export default function Simulator() {
             <Styled.GroupParameters>
               <h3>Parameters</h3>
               <Styled.ButtonGroup>
-                <Styled.Button
-                  onClick={() => {
-                    setIsSimulationActive(!isSimulationActive);
-                    setElements(shuffleElements(pendingElements));
-                  }}
-                >
-                  Reset
-                </Styled.Button>
+                <Styled.Button onClick={handleReset}>Reset</Styled.Button>
                 <Styled.Button onClick={handleStop}>Stop</Styled.Button>
                 <Styled.Button onClick={handlePause}>
                   {isPaused ? "Resume" : "Pause"}
                 </Styled.Button>
-                <Styled.Button>Step</Styled.Button>
+                <Styled.Button onClick={handleStep}>Step</Styled.Button>
               </Styled.ButtonGroup>
             </Styled.GroupParameters>
             <Styled.GroupParameters>
