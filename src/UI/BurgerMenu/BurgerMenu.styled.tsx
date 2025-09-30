@@ -15,6 +15,8 @@ export const BurgerContainer = styled.div<{ $isOpen: boolean }>`
 `;
 
 export const BurgerChildrenContainer = styled.div`
-  margin-top: 5vh;
-  padding: 10px;
+  @media (max-width: 600px) {
+    margin-top: 5vh;
+    padding: 10px;
+  }
 `;
