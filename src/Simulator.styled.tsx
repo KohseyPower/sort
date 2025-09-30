@@ -38,7 +38,11 @@ export const Bar = styled.div<{
 
 export const SlidersContainer = styled.div`
   display: flex;
-  gap: 100px;
+  gap: 200px;
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 10px;
+  }
 `;
 
 export const GroupsParametersContainer = styled.div`
@@ -53,6 +57,7 @@ export const GroupParameters = styled.div`
   background-color: #404040af;
   border-radius: 10px;
   padding: 10px;
+  width: 350px;
 `;
 
 export const ButtonGroup = styled.div`

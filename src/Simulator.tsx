@@ -1,29 +1,30 @@
 import { useState, useMemo, useRef } from "react";
 import * as Styled from "./Simulator.styled";
 import {
-  bubbleSort,
   bubbleSortGenerator,
-  insertionSort,
   insertionSortGenerator,
-  selectionSort,
   selectionSortGenerator,
 } from "./algorithms";
-import { initElements } from "./utils";
+import { shuffleElements } from "./utils";
 import BurgerMenu from "./UI/BurgerMenu/BurgerMenu";
 
 export default function Simulator() {
   const [totalElements, setTotalElements] = useState(10);
-  const [elements, setElements] = useState<number[]>(() => initElements(10));
+  const [elements, setElements] = useState<number[]>(() => shuffleElements(10));
   const [pendingElements, setPendingElements] = useState(totalElements);
   const [activeIndices, setActiveIndices] = useState<number[]>([]);
   const [isSimulationActive, setIsSimulationActive] = useState(false);
   const [sortSpeed, setSortSpeed] = useState(200);
+  const [isPaused, setPaused] = useState(false);
+  const pausedRef = useRef(false);
 
   const sortSpeedRef = useRef(sortSpeed);
   const stepsRef = useRef<Generator<{
     array: number[];
     active: number[];
   }> | null>(null);
+  const currentRunStepRef = useRef<() => void>(() => {});
+  const timeoutRef = useRef<number | null>(null);
 
   const maxValue = useMemo(
     () => elements.reduce((max, v) => (v > max ? v : max), 1),
@@ -34,10 +35,12 @@ export default function Simulator() {
 
   const runSort = (steps: Generator<{ array: number[]; active: number[] }>) => {
     if (isSimulationActive) return;
+
     setIsSimulationActive(true);
     stepsRef.current = steps;
 
     const runStep = () => {
+      if (pausedRef.current) return;
       const nextStep = stepsRef.current?.next();
       if (!nextStep || nextStep.done) {
         setIsSimulationActive(false);
@@ -46,9 +49,39 @@ export default function Simulator() {
       }
       setElements(nextStep.value.array);
       setActiveIndices(nextStep.value.active);
-      setTimeout(runStep, sortSpeedRef.current);
+      timeoutRef.current = setTimeout(runStep, sortSpeedRef.current);
     };
+
+    currentRunStepRef.current = runStep;
     runStep();
+  };
+
+  const handleStop = () => {
+    if (!isSimulationActive) {
+      alert("There is no simulation running.");
+      return;
+    }
+    if (!isPaused) {
+      alert("The simulation is paused.");
+      return;
+    }
+
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    stepsRef.current = null;
+    setIsSimulationActive(false);
+    setActiveIndices([]);
+  };
+
+  const handlePause = () => {
+    setIsSimulationActive(false);
+    pausedRef.current = !pausedRef.current;
+    setPaused(pausedRef.current);
+    if (!pausedRef.current) {
+      currentRunStepRef.current();
+    }
   };
 
   return (
@@ -78,7 +111,7 @@ export default function Simulator() {
                 onChange={(e) => setPendingElements(Number(e.target.value))}
                 onPointerUp={() => {
                   setTotalElements(pendingElements);
-                  setElements(initElements(pendingElements));
+                  setElements(shuffleElements(pendingElements));
                 }}
               />
             </div>
@@ -97,26 +130,21 @@ export default function Simulator() {
           </Styled.SlidersContainer>
           <Styled.GroupsParametersContainer>
             <Styled.GroupParameters>
-              <h3>One-shot sorts</h3>
+              <h3>Parameters</h3>
               <Styled.ButtonGroup>
                 <Styled.Button
-                  disabled={isSimulationActive}
-                  onClick={() => setElements(bubbleSort(elements))}
+                  onClick={() => {
+                    setIsSimulationActive(!isSimulationActive);
+                    setElements(shuffleElements(pendingElements));
+                  }}
                 >
-                  Bubble Sort
+                  Reset
                 </Styled.Button>
-                <Styled.Button
-                  disabled={isSimulationActive}
-                  onClick={() => setElements(insertionSort(elements))}
-                >
-                  Insertion Sort
+                <Styled.Button onClick={handleStop}>Stop</Styled.Button>
+                <Styled.Button onClick={handlePause}>
+                  {isPaused ? "Resume" : "Pause"}
                 </Styled.Button>
-                <Styled.Button
-                  disabled={isSimulationActive}
-                  onClick={() => setElements(selectionSort(elements))}
-                >
-                  Selection Sort
-                </Styled.Button>
+                <Styled.Button>Step</Styled.Button>
               </Styled.ButtonGroup>
             </Styled.GroupParameters>
             <Styled.GroupParameters>

@@ -15,10 +15,3 @@
   --light-background: #434343;
   --main-color: #4f46e5;
 }
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-height: 100vh;
-}
