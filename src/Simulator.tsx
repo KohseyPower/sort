@@ -137,7 +137,7 @@ export default function Simulator() {
               <input
                 type="range"
                 min={5}
-                max={75}
+                max={100}
                 value={pendingElements}
                 disabled={isSimulationActive}
                 onChange={(e) => setPendingElements(Number(e.target.value))}
