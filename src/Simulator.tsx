@@ -7,6 +7,7 @@ import {
 } from "./algorithms";
 import { shuffleElements } from "./utils";
 import BurgerMenu from "./UI/BurgerMenu/BurgerMenu";
+import { randomSortGenerator } from "./algorithms/RandomSort";
 
 export default function Simulator() {
   const [totalElements, setTotalElements] = useState(10);
@@ -192,6 +193,12 @@ export default function Simulator() {
                   onClick={() => runSort(selectionSortGenerator(elements))}
                 >
                   Selection Sort
+                </Styled.Button>{" "}
+                <Styled.Button
+                  disabled={isSimulationActive}
+                  onClick={() => runSort(randomSortGenerator(elements))}
+                >
+                  Bogo Sort
                 </Styled.Button>
               </Styled.ButtonGroup>
             </Styled.GroupParameters>
