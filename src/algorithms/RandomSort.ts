@@ -2,7 +2,7 @@ export function* randomSortGenerator(elements: number[]) {
   const sortedElements = [...elements];
 
   let isSorted = false;
-  const sortedElementsExemple = sortedElements.sort((a, b) => {
+  const sortedElementsExemple = [...sortedElements].sort((a, b) => {
     return a - b;
   });
 
