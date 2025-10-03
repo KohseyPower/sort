@@ -2,7 +2,9 @@ export function* randomSortGenerator(elements: number[]) {
   const sortedElements = [...elements];
 
   let isSorted = false;
-  const sortedElementsExemple = [...sortedElements].sort();
+  const sortedElementsExemple = sortedElements.sort((a, b) => {
+    return a - b;
+  });
 
   while (!isSorted) {
     const i = Math.floor(Math.random() * sortedElements.length);
