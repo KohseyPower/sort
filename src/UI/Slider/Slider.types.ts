@@ -1,6 +1,6 @@
 export type SliderProps = {
   /*
-   * Current value
+   * Current delay
    */
   value: number;
   /*

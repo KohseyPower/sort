@@ -16,11 +16,11 @@ export default function Simulator() {
   const [pendingElements, setPendingElements] = useState(totalElements);
   const [activeIndices, setActiveIndices] = useState<number[]>([]);
   const [isSimulationActive, setIsSimulationActive] = useState(false);
-  const [sortSpeed, setSortSpeed] = useState(200);
+  const [stepDelay, setStepDelay] = useState(200);
   const [isPaused, setIsPaused] = useState(false);
 
   const pausedRef = useRef(false);
-  const sortSpeedRef = useRef(sortSpeed);
+  const stepDelayRef = useRef(stepDelay);
   const stepsRef = useRef<Generator<{
     array: number[];
     active: number[];
@@ -30,7 +30,7 @@ export default function Simulator() {
 
   const maxValue = useMemo(() => Math.max(...elements, 1), [elements]);
 
-  sortSpeedRef.current = sortSpeed;
+  stepDelayRef.current = stepDelay;
 
   const runSort = (steps: Generator<{ array: number[]; active: number[] }>) => {
     if (isSimulationActive) return;
@@ -52,7 +52,7 @@ export default function Simulator() {
       }
       setElements(nextStep.value.array);
       setActiveIndices(nextStep.value.active);
-      timeoutRef.current = window.setTimeout(runStep, sortSpeedRef.current);
+      timeoutRef.current = window.setTimeout(runStep, stepDelayRef.current);
     };
 
     currentRunStepRef.current = runStep;
@@ -152,9 +152,9 @@ export default function Simulator() {
             <div>
               <Slider
                 label="Speed"
-                value={sortSpeed}
+                value={stepDelay}
                 max={1000}
-                onChange={(newSpeed) => setSortSpeed(newSpeed)}
+                onChange={(newSpeed) => setStepDelay(newSpeed)}
               />
             </div>
           </Styled.SlidersContainer>
