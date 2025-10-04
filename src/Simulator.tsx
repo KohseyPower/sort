@@ -134,7 +134,7 @@ export default function Simulator() {
         </Styled.Canvas>
         <BurgerMenu>
           <Styled.SlidersContainer>
-            <div>
+            <Styled.SliderContainer>
               <h3>Number of elements: {totalElements}</h3>
               <input
                 type="range"
@@ -148,15 +148,15 @@ export default function Simulator() {
                   setElements(shuffleElements(pendingElements));
                 }}
               />
-            </div>
-            <div>
+            </Styled.SliderContainer>
+            <Styled.SliderContainer>
               <Slider
                 label="Speed"
                 value={stepDelay}
                 max={1000}
                 onChange={(newSpeed) => setStepDelay(newSpeed)}
               />
-            </div>
+            </Styled.SliderContainer>
           </Styled.SlidersContainer>
           <Styled.GroupsParametersContainer>
             <Styled.GroupParameters>
@@ -192,7 +192,7 @@ export default function Simulator() {
                   onClick={() => runSort(selectionSortGenerator(elements))}
                 >
                   Selection Sort
-                </Styled.Button>{" "}
+                </Styled.Button>
                 <Styled.Button
                   disabled={isSimulationActive}
                   onClick={() => runSort(randomSortGenerator(elements))}
