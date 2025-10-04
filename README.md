@@ -1,5 +1,7 @@
 # Sorting Algorithms Visualizer
 
+Have a look at [https://www.kohsey.ovh/app/sort/](https://www.kohsey.ovh/app/sort/).
+
 This project is a sorting algorithms visualizer built with **React** and **TypeScript**.  
 It provides an interactive way to explore how different sorting algorithms work step by step.
 
