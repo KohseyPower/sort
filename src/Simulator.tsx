@@ -170,7 +170,9 @@ export default function Simulator() {
                 <Styled.Button onClick={handlePause}>
                   {isPaused ? "Resume" : "Pause"}
                 </Styled.Button>
-                <Styled.Button onClick={handleStep}>Step</Styled.Button>
+                {isPaused && (
+                  <Styled.Button onClick={handleStep}>Step</Styled.Button>
+                )}
               </Styled.ButtonGroup>
             </Styled.GroupParameters>
             <Styled.GroupParameters>
