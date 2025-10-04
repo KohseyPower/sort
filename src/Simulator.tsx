@@ -8,6 +8,7 @@ import {
 import { shuffleElements } from "./utils";
 import BurgerMenu from "./UI/BurgerMenu/BurgerMenu";
 import { randomSortGenerator } from "./algorithms/RandomSort";
+import Slider from "./UI/Slider/Slider";
 
 export default function Simulator() {
   const [totalElements, setTotalElements] = useState(10);
@@ -149,15 +150,11 @@ export default function Simulator() {
               />
             </div>
             <div>
-              <h3>Speed : {sortSpeed}</h3>
-              <input
-                type="range"
-                min={0}
-                max={1000}
+              <Slider
+                label="Speed"
                 value={sortSpeed}
-                onChange={(e) => {
-                  setSortSpeed(Number(e.target.value));
-                }}
+                max={1000}
+                onChange={(newSpeed) => setSortSpeed(newSpeed)}
               />
             </div>
           </Styled.SlidersContainer>
