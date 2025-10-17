@@ -162,7 +162,7 @@ export default function Simulator() {
             <Styled.GroupParameters>
               <h3>Parameters</h3>
               <Styled.ButtonGroup>
-                <Styled.Button onClick={handleReset}>Reset</Styled.Button>
+                <Styled.Button onClick={handleReset}>Shuffle</Styled.Button>
                 <Styled.Button onClick={handleStop}>Stop</Styled.Button>
                 <Styled.Button onClick={handlePause}>
                   {isPaused ? "Resume" : "Pause"}
