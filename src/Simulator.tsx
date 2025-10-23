@@ -12,9 +12,9 @@ import { randomSortGenerator } from "./algorithms/RandomSort";
 import Slider from "./UI/Slider/Slider";
 
 export default function Simulator() {
-  const [totalElements, setTotalElements] = useState(10);
+  const [elementCount, setElementCount] = useState(10);
   const [elements, setElements] = useState<number[]>(() => shuffleElements(10));
-  const [pendingElements, setPendingElements] = useState(totalElements);
+  const [nextElementCount, setNextElementCount] = useState(elementCount);
   const [activeIndices, setActiveIndices] = useState<number[]>([]);
   const [isSimulationActive, setIsSimulationActive] = useState(false);
   const [stepDelay, setStepDelay] = useState(200);
@@ -35,12 +35,12 @@ export default function Simulator() {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setTotalElements(pendingElements);
-      setElements(shuffleElements(pendingElements));
+      setElementCount(nextElementCount);
+      setElements(shuffleElements(nextElementCount));
     }, 300);
 
     return () => clearTimeout(timeout);
-  }, [pendingElements]);
+  }, [nextElementCount]);
 
   const runSort = (steps: Generator<{ array: number[]; active: number[] }>) => {
     if (isSimulationActive) return;
@@ -107,7 +107,7 @@ export default function Simulator() {
     setIsSimulationActive(false);
     setIsPaused(false);
     setActiveIndices([]);
-    setElements(shuffleElements(pendingElements));
+    setElements(shuffleElements(nextElementCount));
   };
 
   const handleStep = () => {
@@ -132,7 +132,7 @@ export default function Simulator() {
     <>
       <h3>Visualization of different sorts</h3>
       <Styled.SimulatorContainer>
-        <Styled.Canvas $cols={totalElements}>
+        <Styled.Canvas $cols={elementCount}>
           {elements.map((value, index) => (
             <Styled.Bar
               key={index}
@@ -144,25 +144,22 @@ export default function Simulator() {
         </Styled.Canvas>
         <BurgerMenu>
           <Styled.SlidersContainer>
-            <Styled.SliderContainer>
-              <h3>Number of elements: {totalElements}</h3>
-              <input
-                type="range"
-                min={5}
-                max={100}
-                value={pendingElements}
-                disabled={isSimulationActive}
-                onChange={(e) => setPendingElements(Number(e.target.value))}
-              />
-            </Styled.SliderContainer>
-            <Styled.SliderContainer>
-              <Slider
-                label="Speed"
-                value={stepDelay}
-                max={1000}
-                onChange={(newSpeed) => setStepDelay(newSpeed)}
-              />
-            </Styled.SliderContainer>
+            <Slider
+              type="countSlider"
+              label="Number of elements"
+              value={nextElementCount}
+              min={5}
+              max={100}
+              disabled={isSimulationActive}
+              onChange={(elementCount) => setNextElementCount(elementCount)}
+            />
+            <Slider
+              type="speedSlider"
+              label="Speed"
+              value={stepDelay}
+              max={1000}
+              onChange={(newSpeed) => setStepDelay(newSpeed)}
+            />
           </Styled.SlidersContainer>
           <Styled.GroupsParametersContainer>
             <Styled.GroupParameters>

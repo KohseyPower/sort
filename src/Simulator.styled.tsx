@@ -45,10 +45,6 @@ export const SlidersContainer = styled.div`
   }
 `;
 
-export const SliderContainer = styled.div`
-  min-width: 250px;
-`;
-
 export const GroupsParametersContainer = styled.div`
   display: flex;
   align-items: center;

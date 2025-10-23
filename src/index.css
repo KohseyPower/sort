@@ -13,5 +13,10 @@
   -moz-osx-font-smoothing: grayscale;
 
   --light-background: #434343;
+  --lighter-background: #969696;
+  
   --main-color: #4f46e5;
+  --main-color-light: #7b6cf6;
+  --main-color-dark: #372fa3;
+  --accent-color: #00bcd4;
 }
