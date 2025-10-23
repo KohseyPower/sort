@@ -3,6 +3,7 @@ import * as Styled from "./Simulator.styled";
 import {
   bubbleSortGenerator,
   insertionSortGenerator,
+  MergeSortGenerator,
   selectionSortGenerator,
 } from "./algorithms";
 import { shuffleElements } from "./utils";
@@ -198,6 +199,12 @@ export default function Simulator() {
                   onClick={() => runSort(randomSortGenerator(elements))}
                 >
                   Bogo Sort
+                </Styled.Button>
+                <Styled.Button
+                  disabled={isSimulationActive}
+                  onClick={() => runSort(MergeSortGenerator(elements))}
+                >
+                  Merge Sort
                 </Styled.Button>
               </Styled.ButtonGroup>
             </Styled.GroupParameters>
