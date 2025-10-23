@@ -51,6 +51,7 @@ export const SliderContainer = styled.div`
 
 export const GroupsParametersContainer = styled.div`
   display: flex;
+  align-items: center;
   gap: 20px;
   @media (max-width: 600px) {
     flex-direction: column;
