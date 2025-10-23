@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import * as Styled from "./Simulator.styled";
 import {
   bubbleSortGenerator,
@@ -32,6 +32,15 @@ export default function Simulator() {
   const maxValue = useMemo(() => Math.max(...elements, 1), [elements]);
 
   stepDelayRef.current = stepDelay;
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setTotalElements(pendingElements);
+      setElements(shuffleElements(pendingElements));
+    }, 300);
+
+    return () => clearTimeout(timeout);
+  }, [pendingElements]);
 
   const runSort = (steps: Generator<{ array: number[]; active: number[] }>) => {
     if (isSimulationActive) return;
@@ -144,10 +153,6 @@ export default function Simulator() {
                 value={pendingElements}
                 disabled={isSimulationActive}
                 onChange={(e) => setPendingElements(Number(e.target.value))}
-                onPointerUp={() => {
-                  setTotalElements(pendingElements);
-                  setElements(shuffleElements(pendingElements));
-                }}
               />
             </Styled.SliderContainer>
             <Styled.SliderContainer>
