@@ -40,4 +40,8 @@ jobs:
             docker load -i ~/myapp.tar
             docker stop myapp || true
             docker rm myapp || true
-            docker run -d --name myapp -p 80:80 myapp:latest
+            docker run -d \
+              --name myapp \
+              -p 80:80 -p 443:443 \
+              -v /etc/letsencrypt:/etc/letsencrypt:ro \
+              myapp:latest
