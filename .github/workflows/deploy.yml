@@ -17,7 +17,9 @@ jobs:
         run: docker build -t myapp:latest .
 
       - name: Save image as tar
-        run: docker save myapp:latest -o myapp.tar
+        run: |
+          docker save myapp:latest -o myapp.tar
+          chmod 644 myapp.tar
 
       - name: Copy image to VPS
         uses: appleboy/scp-action@v0.1.7
