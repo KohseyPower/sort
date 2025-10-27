@@ -59,6 +59,7 @@ export const GroupParameters = styled.div`
   border-radius: 10px;
   padding: 10px;
   width: 350px;
+  height: 250px;
 `;
 
 export const ButtonGroup = styled.div`
