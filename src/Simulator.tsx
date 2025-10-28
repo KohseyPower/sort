@@ -20,8 +20,6 @@ export default function Simulator() {
   const [stepDelay, setStepDelay] = useState(200);
   const [isPaused, setIsPaused] = useState(false);
 
-  console.log("test");
-
   const pausedRef = useRef(false);
   const stepDelayRef = useRef(stepDelay);
   const stepsRef = useRef<Generator<{
