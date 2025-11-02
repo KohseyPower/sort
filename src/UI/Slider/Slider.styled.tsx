@@ -19,7 +19,7 @@ export const RangeInput = styled.input.attrs({ type: "range" })<{
   background: linear-gradient(
     90deg,
     var(--main-color) 0%,
-    var(--main-color-dark) calc(${(props) => props.$percent}% + 1%),
+    var(--main-color-dark) calc(${(props) => props.$percent}%),
     white calc(${(props) => props.$percent}% + 1%),
     white 100%
   );
