@@ -11,6 +11,7 @@ export const BurgerContainer = styled.div<{ $isOpen: boolean }>`
     height: 100vh;
     width: 100vw;
     background-color: rgba(245, 245, 245, 0.8);
+    overflow-x: auto;
   }
 `;
 
