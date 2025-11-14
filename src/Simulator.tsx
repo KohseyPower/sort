@@ -10,6 +10,10 @@ import { shuffleElements } from "./utils";
 import BurgerMenu from "./UI/BurgerMenu/BurgerMenu";
 import { randomSortGenerator } from "./algorithms/RandomSort";
 import Slider from "./UI/Slider/Slider";
+import {
+  ALGORITHMS,
+  type AlgorithmSelection,
+} from "./utils/AlgorithmSelection";
 
 export default function Simulator() {
   const [elementCount, setElementCount] = useState(10);
@@ -19,6 +23,8 @@ export default function Simulator() {
   const [isSimulationActive, setIsSimulationActive] = useState(false);
   const [stepDelay, setStepDelay] = useState(200);
   const [isPaused, setIsPaused] = useState(false);
+  const [selectedAlgorithm, setSelectedAlgorithm] =
+    useState<AlgorithmSelection>("bubble");
 
   const pausedRef = useRef(false);
   const stepDelayRef = useRef(stepDelay);
@@ -67,6 +73,34 @@ export default function Simulator() {
 
     currentRunStepRef.current = runStep;
     runStep();
+  };
+
+  const handlePlay = () => {
+    if (isSimulationActive) return;
+
+    let generator;
+    switch (selectedAlgorithm) {
+      case "bubble":
+        generator = bubbleSortGenerator(elements);
+        break;
+      case "insertion":
+        generator = insertionSortGenerator(elements);
+        break;
+      case "selection":
+        generator = selectionSortGenerator(elements);
+        break;
+      case "bogo":
+        generator = randomSortGenerator(elements);
+        break;
+      case "merge":
+        generator = MergeSortGenerator(elements);
+        break;
+      default:
+        alert("Please select a valid algorithm.");
+        return;
+    }
+
+    runSort(generator);
   };
 
   const handleStop = () => {
@@ -163,7 +197,7 @@ export default function Simulator() {
           </Styled.SlidersContainer>
           <Styled.GroupsParametersContainer>
             <Styled.GroupParameters>
-              <h3>Parameters</h3>
+              <h3>Simulation controls</h3>
               <Styled.ButtonGroup>
                 <Styled.Button onClick={handleReset}>Shuffle</Styled.Button>
                 <Styled.Button onClick={handleStop}>Stop</Styled.Button>
@@ -176,37 +210,29 @@ export default function Simulator() {
               </Styled.ButtonGroup>
             </Styled.GroupParameters>
             <Styled.GroupParameters>
-              <h3>Step-by-step sorts</h3>
+              <h3>Sorting algorithms</h3>
               <Styled.ButtonGroup>
+                <label htmlFor="algorithmSelect">Choose an algorithm:</label>
+                <select
+                  id="algorithmSelect"
+                  value={selectedAlgorithm}
+                  disabled={isSimulationActive}
+                  onChange={(e) =>
+                    setSelectedAlgorithm(e.target.value as AlgorithmSelection)
+                  }
+                >
+                  {Object.entries(ALGORITHMS).map(([key, label]) => (
+                    <option key={key} value={key}>
+                      {label}
+                    </option>
+                  ))}
+                </select>
+
                 <Styled.Button
                   disabled={isSimulationActive}
-                  onClick={() => runSort(bubbleSortGenerator(elements))}
+                  onClick={handlePlay}
                 >
-                  Bubble Sort
-                </Styled.Button>
-                <Styled.Button
-                  disabled={isSimulationActive}
-                  onClick={() => runSort(insertionSortGenerator(elements))}
-                >
-                  Insertion Sort
-                </Styled.Button>
-                <Styled.Button
-                  disabled={isSimulationActive}
-                  onClick={() => runSort(selectionSortGenerator(elements))}
-                >
-                  Selection Sort
-                </Styled.Button>
-                <Styled.Button
-                  disabled={isSimulationActive}
-                  onClick={() => runSort(randomSortGenerator(elements))}
-                >
-                  Bogo Sort
-                </Styled.Button>
-                <Styled.Button
-                  disabled={isSimulationActive}
-                  onClick={() => runSort(MergeSortGenerator(elements))}
-                >
-                  Merge Sort
+                  Play
                 </Styled.Button>
               </Styled.ButtonGroup>
             </Styled.GroupParameters>
