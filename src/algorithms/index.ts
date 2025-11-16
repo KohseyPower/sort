@@ -5,4 +5,5 @@ export { insertionSortGenerator } from "./InsertionSort";
 export { selectionSort } from "./SelectionSort";
 export { selectionSortGenerator } from "./SelectionSort";
 export { randomSortGenerator } from "./RandomSort";
-export { MergeSortGenerator } from "./MergeSort";
+export { mergeSortGenerator } from "./MergeSort";
+export { quickSortGenerator } from "./QuickSort";

@@ -4,6 +4,7 @@ export const ALGORITHMS = {
   selection: "Selection Sort",
   bogo: "Bogo Sort",
   merge: "Merge Sort",
+  quick: "Quick Sort",
 };
 
 export type AlgorithmSelection = keyof typeof ALGORITHMS;

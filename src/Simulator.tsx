@@ -3,7 +3,8 @@ import * as Styled from "./Simulator.styled";
 import {
   bubbleSortGenerator,
   insertionSortGenerator,
-  MergeSortGenerator,
+  mergeSortGenerator,
+  quickSortGenerator,
   selectionSortGenerator,
 } from "./algorithms";
 import { shuffleElements } from "./utils";
@@ -93,7 +94,10 @@ export default function Simulator() {
         generator = randomSortGenerator(elements);
         break;
       case "merge":
-        generator = MergeSortGenerator(elements);
+        generator = mergeSortGenerator(elements);
+        break;
+      case "quick":
+        generator = quickSortGenerator(elements);
         break;
       default:
         alert("Please select a valid algorithm.");

@@ -1,4 +1,4 @@
-export function* MergeSortGenerator(
+export function* mergeSortGenerator(
   array: number[],
   startIndex = 0
 ): Generator<{ array: number[]; active: number[] }> {
@@ -16,7 +16,7 @@ export function* MergeSortGenerator(
 
   // Recursion on left half
   let sortedLeft = leftPart;
-  for (const step of MergeSortGenerator(leftPart, startIndex)) {
+  for (const step of mergeSortGenerator(leftPart, startIndex)) {
     yield {
       array: [...step.array, ...items.slice(middleIndex)],
       active: step.active,
@@ -26,7 +26,7 @@ export function* MergeSortGenerator(
 
   // Recursion on right half
   let sortedRight = rightPart;
-  for (const step of MergeSortGenerator(rightPart, startIndex + middleIndex)) {
+  for (const step of mergeSortGenerator(rightPart, startIndex + middleIndex)) {
     yield {
       array: [...sortedLeft, ...step.array],
       active: step.active,
