@@ -21,13 +21,13 @@ jobs:
           docker save myapp:latest -o myapp.tar
           chmod 644 myapp.tar
 
-      - name: Copy image to VPS
+      - name: Copy deployment files to VPS
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          source: "myapp.tar"
+          source: "myapp.tar,docker-compose.yml"
           target: "~/"
 
       - name: Deploy on VPS
@@ -38,9 +38,4 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             docker load -i ~/myapp.tar
-            docker stop myapp || true
-            docker rm myapp || true
-            docker run -d \
-              --name myapp \
-                -p 80:80 \
-              myapp:latest
+            APP_IMAGE=myapp:latest docker compose -f ~/docker-compose.yml up -d --force-recreate --remove-orphans --no-build

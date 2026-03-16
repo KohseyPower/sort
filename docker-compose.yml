@@ -1,5 +1,6 @@
 services:
   web:
+    image: ${APP_IMAGE:-sort-app:latest}
     build: .
     container_name: sort-app
     ports:
